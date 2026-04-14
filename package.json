@@ -1,5 +1,6 @@
 {
   "name": "honest_reviewer_backend",
+  "type":"module",
   "version": "1.0.0",
   "description": "",
   "homepage": "https://github.com/Grsn-r/honest_reviewer_backend#readme",
@@ -12,10 +13,10 @@
   },
   "license": "ISC",
   "author": "Geson Ruíz",
-  "type": "commonjs",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js"
   },
   "dependencies": {
     "dotenv": "^17.4.2",
