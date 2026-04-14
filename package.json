@@ -1,6 +1,26 @@
 {
+  "name": "honest_reviewer_backend",
+  "version": "1.0.0",
+  "description": "",
+  "homepage": "https://github.com/Grsn-r/honest_reviewer_backend#readme",
+  "bugs": {
+    "url": "https://github.com/Grsn-r/honest_reviewer_backend/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Grsn-r/honest_reviewer_backend.git"
+  },
+  "license": "ISC",
+  "author": "Geson Ruíz",
+  "type": "commonjs",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
   "dependencies": {
+    "dotenv": "^17.4.2",
     "express": "^5.2.1",
     "mongoose": "^9.4.1"
-  }
+  },
+  "devDependencies": {}
 }
