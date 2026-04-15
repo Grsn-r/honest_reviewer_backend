@@ -1,6 +1,6 @@
 {
   "name": "honest_reviewer_backend",
-  "type":"module",
+  "type": "module",
   "version": "1.0.0",
   "description": "",
   "homepage": "https://github.com/Grsn-r/honest_reviewer_backend#readme",
@@ -19,9 +19,11 @@
     "start": "node index.js"
   },
   "dependencies": {
+    "bcrypt": "^6.0.0",
     "dotenv": "^17.4.2",
     "express": "^5.2.1",
-    "mongoose": "^9.4.1"
-  },
-  "devDependencies": {}
+    "jsonwebtoken": "^9.0.3",
+    "mongoose": "^9.4.1",
+    "validator": "^13.15.35"
+  }
 }
