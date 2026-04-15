@@ -20,10 +20,13 @@ const userSchema = new Schema({
     password:{
         type: String,
         required: true,
+        minlength: 8,
+        select: false,
     },
     bio:{
         type: String,
         maxlength: 300,
+        default: 'pon algo sobre ti, un chisme puede ser',
     },
 },
 {timestamps: true,});
