@@ -7,7 +7,7 @@ const reviewSchema = new Schema({
         minlength: 10,
         maxlength: 50,
     },
-    review:{
+    text:{
         type: String,
         required: true,
         maxlength: 400,

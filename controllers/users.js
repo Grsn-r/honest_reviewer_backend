@@ -44,5 +44,17 @@ const login = (req, res, next) => {
     .catch(next);
 }
 
+const updateUser = (req, res, next) => {
+    const {name, bio} = req.body;
+    const userId = req.user._id;
+    User.findByIdAndUpdate(userId, {name, bio})
+    .then(data => {
+        if (data) {
+            return res.status(200).json(data);
+        }
+        throw new notFoundError('Usuario no encontrado');
+    })
+    .catch(next);
+}
 
-export  {getUser, createUser, login};
+export  {getUser, createUser, login, updateUser};
