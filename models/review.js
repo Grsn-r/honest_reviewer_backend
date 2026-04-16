@@ -17,16 +17,14 @@ const reviewSchema = new Schema({
         ref: 'user',
         required: true,
     },
-    likes:{
-        type: Number,
-        default: 0,
-        min: 0,
-    },
-    dislikes:{
-        type: Number,
-        default: 0,
-        min: 0,
-    },
+    likes:[{
+        type: Schema.Types.ObjectId,
+        ref: 'user',
+    }],
+    dislikes:[{
+        type: Schema.Types.ObjectId,
+        ref: 'user',
+    }],
     comments:[
         {
             author: {

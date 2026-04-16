@@ -6,10 +6,17 @@ class notFoundError extends Error{
 }
 
 class authError extends Error{
-    constructor(essage){
+    constructor(message){
         super(message);
         this.statusCode = 401;
     }
 }
 
-export {notFoundError, authError};
+class badRquestError extends Error{
+    constructor(message){
+        super(message);
+        this.statusCode = 400;
+    }
+}
+
+export {notFoundError, authError, badRquestError};
