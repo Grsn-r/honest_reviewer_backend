@@ -1,5 +1,6 @@
 {
   "name": "honest_reviewer_backend",
+  "type": "module",
   "version": "1.0.0",
   "description": "",
   "homepage": "https://github.com/Grsn-r/honest_reviewer_backend#readme",
@@ -12,15 +13,31 @@
   },
   "license": "ISC",
   "author": "Geson Ruíz",
-  "type": "commonjs",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js",
+    "dev": "nodemon index.js"
   },
   "dependencies": {
+    "bcrypt": "^6.0.0",
+    "celebrate": "^12.1.2",
+    "cors": "^2.8.6",
     "dotenv": "^17.4.2",
     "express": "^5.2.1",
-    "mongoose": "^9.4.1"
+    "express-rate-limit": "^8.3.2",
+    "express-winston": "^4.2.0",
+    "helmet": "^8.1.0",
+    "jsonwebtoken": "^9.0.3",
+    "mongoose": "^9.4.1",
+    "multer": "^2.1.1",
+    "winston": "^3.19.0"
   },
-  "devDependencies": {}
+  "devDependencies": {
+    "nodemon": "^3.1.14",
+    "standard": "^17.1.2"
+  },
+  "eslintConfig": {
+    "extends": "./node_modules/standard/eslintrc.json"
+  }
 }
