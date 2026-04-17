@@ -1,11 +1,12 @@
 import express from 'express';
 import {getReviews, createReview, likeReview, dislikeReview, commentReview, removeReview, removeComment} from '../controllers/reviews.js';
-import { validateComment } from '../middleware/validator.js';
+import { validateComment, validateReview } from '../middleware/validator.js';
+import upload from '../config/multer.js';
 
 const router = express.Router();
 
 router.get('/', getReviews);
-router.post('/', createReview);
+router.post('/', upload('image'), validateReview, createReview);
 router.delete('/:reviewId', removeReview);
 router.post('/:reviewID/comments', validateComment, commentReview);
 router.delete('/:reviewId/comments', removeComment);

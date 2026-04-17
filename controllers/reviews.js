@@ -12,8 +12,19 @@ const getReviews = (req, res, next) => {
 };
 
 const createReview = (req, res, next) => {
-    const {title, text, picture} = req.body;
-    Review.create({title, text, author: req.user._id, picture})
+    const {title, text} = req.body;
+    const reviewData = {
+        title,
+        text,
+        author: req.user._id,
+    }
+    if (req.file) {
+        reviewData.image = {
+            data: req.file.buffer,
+            contentType: req.file.mimetype,
+        }
+    }
+    Review.create(reviewData)
     .then(review => {
         return res.status(200).json(review);
     })

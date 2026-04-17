@@ -29,4 +29,4 @@ const validateReview = celebrate({
     }).unknown(true),
 })
 
-export {validateCreateUser, validateLogin, validateComment};
+export {validateCreateUser, validateLogin, validateComment, validateReview};
