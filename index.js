@@ -6,14 +6,15 @@ import helmet from 'helmet';
 import auth from './middleware/auth.js';
 import connectMongoDb from './connectMongoDB.js';
 import users from './routers/usersRouter.js';
-import reviews from './routers/reviewsController.js';
+import reviews from './routers/reviewsRouter.js';
+import { validateCreateUser, validateLogin } from './middleware/validator.js';
 
 connectMongoDb();
 const app = express();
 app.use(helmet());
 app.use(express.json());
-app.post('/login', login);
-app.post('/register', createUser);
+app.post('/login', validateLogin, login);
+app.post('/register', validateCreateUser, createUser);
 app.use(auth);
 app.use('/users', users);
 app.use('/', reviews);

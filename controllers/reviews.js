@@ -76,7 +76,11 @@ const removeComment = (req, res, next) => {
         if (!comment.author.equals(req.user._id)) {
             throw new authError('no puedes borrar este comentario');
         }
-        return Review.findByIdAndDelete(reviewId, {$pull: {comments: {_id: commentId}}}, {new: true})
+        comment.remove();
+        return review.save();
+    })
+    .then(updatedReview => {
+        return res.status(200).json(updatedReview);
     })
     .catch(next);
 }
