@@ -10,7 +10,9 @@ import reviews from './routers/reviewsRouter.js';
 import { validateCreateUser, validateLogin } from './middleware/validator.js';
 import { reqLogger, errorLogger } from './middleware/logger.js';
 import rateLimit from 'express-rate-limit';
+import cors from 'cors';
 
+const PORT = process.env.PORT || 3001;
 const limiter = rateLimit({
     windowMs:15*60*100,
     max: 50,
@@ -18,6 +20,11 @@ const limiter = rateLimit({
 })
 connectMongoDb();
 const app = express();
+app.use(cors({
+    origin: [
+        'http://localhost:3000',      
+    ]
+}))
 app.use(helmet());
 app.use(limiter);
 app.use(express.json());
@@ -36,6 +43,6 @@ app.use((err, req, res, next) => {
     res.status(statusCode).send({message: statusCode === 500 ? 'Error de servidor' : message})
 });
 
-app.listen(process.env.PORT, () => {
-    console.log(`server ejecutandose en ${process.env.PORT}`);
+app.listen(PORT, () => {
+    console.log(`server ejecutandose en ${PORT}`);
 })
