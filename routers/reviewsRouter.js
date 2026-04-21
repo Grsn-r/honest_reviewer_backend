@@ -6,7 +6,7 @@ import upload from '../config/multer.js';
 const router = express.Router();
 
 router.get('/', getReviews);
-router.post('/', upload('image'), validateReview, createReview);
+router.post('/', upload.single('image'), validateReview, createReview);
 router.delete('/:reviewId', removeReview);
 router.post('/:reviewID/comments', validateComment, commentReview);
 router.delete('/:reviewId/comments', removeComment);
