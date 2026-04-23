@@ -60,15 +60,21 @@ const updateUser = (req, res, next) => {
 const setPassword = (req, res, next) => {
     const {password, newPassword} = req.body;
     const userId = req.user._id;
-    User.findOne(userId).select('+password')
+    User.findById(userId).select('+password')
     .then(user => {
         bcrypt.compare(password, user.password)
         .then(match => {
-            if (match) {
                 bcrypt.hash(req.body.newPassword, 10)
                 .then(hash => User.findByIdAndUpdate(userId, {password: hash}))
-            }
-            throw new authError('contraseña incorrecta')
+                .then(mod => {
+                    return res.status(200).send({message: 'contraseña modificada'});
+                })
+                .catch(err => {
+                    return res.status(401).send({message: 'no se pudo cambiar la contraseña'})
+                });
+        })
+        .catch(err => {
+            return res.status(401).send({'contraseña incorrecta'})
         })
     })
     .catch(next)
