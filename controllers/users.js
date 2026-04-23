@@ -64,7 +64,6 @@ const setPassword = (req, res, next) => {
     .then(user => {
         bcrypt.compare(password, user.password)
         .then(match => {
-            if (match) {
                 bcrypt.hash(req.body.newPassword, 10)
                 .then(hash => User.findByIdAndUpdate(userId, {password: hash}))
                 .then(mod => {
