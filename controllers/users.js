@@ -70,11 +70,11 @@ const setPassword = (req, res, next) => {
                     return res.status(200).send({message: 'contraseña modificada'})
                 })
                 .catch(next);
-            }
-            throw new authError('contraseña incorrecta')
-        })
+            })
+        .catch(next);
     })
     .catch(next)
 }
+
 
 export  {getUser, createUser, login, updateUser, setPassword};
