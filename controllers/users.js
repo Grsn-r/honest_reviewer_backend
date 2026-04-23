@@ -67,14 +67,11 @@ const setPassword = (req, res, next) => {
                 bcrypt.hash(req.body.newPassword, 10)
                 .then(hash => User.findByIdAndUpdate(userId, {password: hash}))
                 .then(mod => {
-                    return res.status(200).send({message: 'contraseña modificada'});
+                    return res.status(200).send({message: 'contraseña modificada'})
                 })
-                .catch(err => {
-                    return res.status(401).send({message: 'no se pudo cambiar la contraseña'})
-                });
-        })
-        .catch(err => {
-            return res.status(401).send({'contraseña incorrecta'})
+                .catch(next);
+            }
+            throw new authError('contraseña incorrecta')
         })
     })
     .catch(next)
