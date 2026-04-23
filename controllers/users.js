@@ -1,5 +1,5 @@
 import User from '../models/user.js';
-import bcrypt from 'bcrypt';
+import bcrypt, { hash } from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import { notFoundError, authError } from '../errors/errors.js';
 
@@ -50,11 +50,28 @@ const updateUser = (req, res, next) => {
     User.findByIdAndUpdate(userId, {name, bio})
     .then(data => {
         if (data) {
-            return res.status(200).json(data);
+            return res.status(200).send({message: 'datos actualizados'});
         }
         throw new notFoundError('Usuario no encontrado');
     })
     .catch(next);
 }
 
-export  {getUser, createUser, login, updateUser};
+const setPassword = (req, res, next) => {
+    const {password, newPassword} = req.body;
+    const userId = req.user._id;
+    User.findOne(userId).select('+password')
+    .then(user => {
+        bcrypt.compare(password, user.password)
+        .then(match => {
+            if (match) {
+                bcrypt.hash(req.body.newPassword, 10)
+                .then(hash => User.findByIdAndUpdate(userId, {password: hash}))
+            }
+            throw new authError('contraseña incorrecta')
+        })
+    })
+    .catch(next)
+}
+
+export  {getUser, createUser, login, updateUser, setPassword};

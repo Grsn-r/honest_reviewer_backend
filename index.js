@@ -36,9 +36,12 @@ app.use('/users', users);
 app.use('/', reviews);
 app.use(errorLogger);
 app.use((err, req, res, next) => {
+    if (err.code === 11000 ) {
+        return res.status(400).send({message: 'correo ya registrado'});
+    }
     if (err.name === 'DocumentNotFoundError') {
-            return res.status(404).send({message: 'Elemento no encontrado'});
-        }
+        return res.status(404).send({message: 'Elemento no encontrado'});
+    }
     const {statusCode = 500, message} = err;
     res.status(statusCode).send({message: statusCode === 500 ? 'Error de servidor' : message})
 });
