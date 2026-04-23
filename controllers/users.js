@@ -74,4 +74,4 @@ const setPassword = (req, res, next) => {
     .catch(next)
 }
 
-export  {getUser, createUser, login, updateUser};
+export  {getUser, createUser, login, updateUser, setPassword};
