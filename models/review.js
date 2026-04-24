@@ -48,6 +48,6 @@ const reviewSchema = new Schema({
         contentType: String,
     }
 }, 
-{timestraps: true,});
+{timestamps: true,});
 
 export default mongoose.model('review', reviewSchema);

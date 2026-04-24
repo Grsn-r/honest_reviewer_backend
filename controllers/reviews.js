@@ -4,7 +4,7 @@ import { notFoundError, authError, badRquestError } from '../errors/errors.js';
 const getReviews = (req, res, next) => {
     Review.find({})
     .populate('author')
-    .popilate('comments.author')
+    .populate('comments.author')
     .then(reviews => {
         return res.status(200).json(reviews);
     })
@@ -19,7 +19,7 @@ const createReview = (req, res, next) => {
         author: req.user._id,
     }
     if (req.file) {
-        reviewData.image = {
+        reviewData.picture = {
             data: req.file.buffer,
             contentType: req.file.mimetype,
         }
