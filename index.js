@@ -11,6 +11,7 @@ import { validateCreateUser, validateLogin } from './middleware/validator.js';
 import { reqLogger, errorLogger } from './middleware/logger.js';
 import rateLimit from 'express-rate-limit';
 import cors from 'cors';
+import path from 'path';
 
 const PORT = process.env.PORT || 3001;
 const limiter = rateLimit({
@@ -20,6 +21,7 @@ const limiter = rateLimit({
 })
 connectMongoDb();
 const app = express();
+app.use('/uploads', express.static(path.join(process.cwd(), 'uploads')));
 app.use(cors({
     origin: [
         'http://localhost:3000',      

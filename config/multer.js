@@ -1,6 +1,17 @@
 import multer from "multer";
+import {v4 as uuidv4} from 'uuid';
+import path from "path";
 
-const storage = multer.memoryStorage();
+const storage = multer.diskStorage({
+    destination: (req, file, cb) => {
+        cb(null, path.join('uploads'));
+    },
+    filename : (req, file, cb) => {
+        const ext = path.extname(file.originalname);
+        const newName = `${uuidv4()}${ext}`;
+        cb(null, newName)
+    }
+});
 
 const fileFilter = (req, file, cb) => {
     if (file.mimetype.startsWith('image/')) {
@@ -11,8 +22,8 @@ const fileFilter = (req, file, cb) => {
 }
 
 const upload = multer({
-    storage: storage,
-    fileFilter: fileFilter,
+    storage,
+    fileFilter,
     limits: {
         fileSize: 5 * 1024 * 1024,
         files: 1,
