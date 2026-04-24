@@ -6,7 +6,11 @@ const getReviews = (req, res, next) => {
     .populate('author')
     .populate('comments.author')
     .then(reviews => {
-        return res.status(200).json(reviews);
+        const allReviews = reviews.map(rv => {
+            const fullReview = { ...rv.toObject(), pictureUrl: rv.picture ? `${req.protocol}://${req.get('host')}/uploads/${rv.picture}` : null }
+            return fullReview;
+        })
+        return res.status(200).json(allReviews);
     })
     .catch(next);
 };
@@ -19,10 +23,7 @@ const createReview = (req, res, next) => {
         author: req.user._id,
     }
     if (req.file) {
-        reviewData.picture = {
-            data: req.file.buffer,
-            contentType: req.file.mimetype,
-        }
+        reviewData.picture = req.file.filename;
     }
     Review.create(reviewData)
     .then(review => {

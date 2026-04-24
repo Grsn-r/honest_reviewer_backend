@@ -44,8 +44,8 @@ const reviewSchema = new Schema({
         },
     ],
     picture:{
-        data: Buffer,
-        contentType: String,
+        type: String,
+        required: false,
     }
 }, 
 {timestamps: true,});
