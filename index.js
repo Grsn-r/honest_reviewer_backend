@@ -22,6 +22,7 @@ const limiter = rateLimit({
 connectMongoDb();
 const app = express();
 app.use('/uploads', express.static(path.join(process.cwd(), 'uploads')));
+app.set('trust proxy', true);
 app.use(cors({
     origin: [
         'http://localhost:3000',      
