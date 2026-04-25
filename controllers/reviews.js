@@ -98,8 +98,12 @@ const removeComment = (req, res, next) => {
 }
 
 const removeReview = (req, res, next) => {
+    console.log('removeReview called with reviewId:', req.params.reviewId);
+    console.log('User ID:', req.user?._id);
     Review.findById(req.params.reviewId).orFail()
     .then(review => {
+        console.log('Review found:', review._id);
+        console.log('Review author:', review.author);
         if (review.author.equals(req.user._id)) {
             return Review.findByIdAndDelete(req.params.reviewId)
             .then(deleted => {
