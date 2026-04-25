@@ -16,13 +16,13 @@ import path from 'path';
 const PORT = process.env.PORT || 3001;
 const limiter = rateLimit({
     windowMs:15*60*100,
-    max: 50,
+    max: 1000,
     message: 'demasiadas solicitudes desde esta IP'
 })
 connectMongoDb();
 const app = express();
 app.use('/uploads', express.static(path.join(process.cwd(), 'uploads')));
-app.set('trust proxy', true);
+app.set('trust proxy', 1);
 app.use(cors({
     origin: [
         'http://localhost:3000',      
