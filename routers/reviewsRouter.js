@@ -8,7 +8,7 @@ const router = express.Router();
 router.get('/', getReviews);
 router.post('/', upload.single('image'), validateReview, createReview);
 router.delete('/:reviewId', removeReview);
-router.post('/:reviewID/comments', validateComment, commentReview);
+router.post('/:reviewId/comments', validateComment, commentReview);
 router.delete('/:reviewId/comments', removeComment);
 router.put('/reviewId/likes', likeReview);
 router.delete('/:reviewId/likes', dislikeReview);
