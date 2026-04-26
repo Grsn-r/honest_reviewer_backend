@@ -85,16 +85,19 @@ const removeComment = (req, res, next) => {
         if (!comment) {
             throw new notFoundError('comentario no encontrado');
         }
-        if (!comment.author.equals(req.user._id)) {
+        if (!req.user || !comment.author.equals(req.user._id)) {
             throw new authError('no puedes borrar este comentario');
         }
-        comment.remove();
+        review.comments.pull(commentId);
         return review.save();
     })
     .then(updatedReview => {
         return res.status(200).json(updatedReview);
     })
-    .catch(next);
+    .catch(err => {
+        console.error(err);
+        next();
+    });
 }
 
 const removeReview = (req, res, next) => {
