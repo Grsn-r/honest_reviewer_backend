@@ -64,14 +64,17 @@ const commentReview = (req, res, next) => {
         }
         const userComments = review.comments.filter(comment => comment.author.toString() === userId.toString());
 
-        if (userComments.length >= 10) {
+        if (userComments.length >= 30) {
             throw new badRquestError('límite de comentarios alcanzado');
         }
         return Review.findByIdAndUpdate(req.params.reviewId, {
             $addToSet: {comments: {text: text, author: userId, createdAt: new Date()}}
             }, {new:true})
-            .then(newComment => {
-                res.status(200).json(newComment);
+            .then(updatedRv => {
+                return updatedRv.populate('comments.author')
+            })
+            .then(populated => {
+                res.json(populated);
             });
     })
     .catch(next);
