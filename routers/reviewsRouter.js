@@ -10,7 +10,7 @@ router.post('/', upload.single('image'), validateReview, createReview);
 router.delete('/:reviewId', removeReview);
 router.post('/:reviewId/comments', validateComment, commentReview);
 router.delete('/:reviewId/comments/:commentId', removeComment);
-router.put('/reviewId/likes', likeReview);
+router.put('/:reviewId/likes', likeReview);
 router.delete('/:reviewId/likes', dislikeReview);
 
 export default router;

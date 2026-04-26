@@ -33,7 +33,7 @@ const createReview = (req, res, next) => {
 }
 
 const likeReview = (req, res, next) => {
-    Review.findByIdAndUpdate(req.params.reviewID, {
+    Review.findByIdAndUpdate(req.params.reviewId, {
         $addToSet: {likes: req.user._id},
         $pull: {dislikes: req.user._id},},
         {new: true})
