@@ -25,7 +25,8 @@ app.use('/uploads', express.static(path.join(process.cwd(), 'uploads')));
 app.set('trust proxy', 1);
 app.use(cors({
     origin: [
-        'http://localhost:3000',      
+        'http://localhost:3000',
+        'https://honest-reviewer.vercel.app'     
     ]
 }))
 app.use(helmet());
