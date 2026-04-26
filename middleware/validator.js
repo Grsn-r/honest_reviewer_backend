@@ -24,7 +24,7 @@ const validateComment = celebrate({
 
 const validateReview = celebrate({
     body: Joi.object().keys({
-        title: Joi.string().required().min(10).max(50),
+        title: Joi.string().required().min(5).max(50),
         text: Joi.string().required().max(400),
     }).unknown(true),
 })
