@@ -36,7 +36,7 @@ const likeReview = (req, res, next) => {
     Review.findByIdAndUpdate(req.params.reviewId, {
         $addToSet: {likes: req.user._id},
         $pull: {dislikes: req.user._id},},
-        {new: true})
+        {returnDocument: 'after'})
     .then(like => {
         return res.status(200).send(like);
     })
@@ -44,10 +44,10 @@ const likeReview = (req, res, next) => {
 }
 
 const dislikeReview = (req, res, next) => {
-    Review.findByIdAndUpdate(req.params.reviewID, {
+    Review.findByIdAndUpdate(req.params.reviewId, {
         $addToSet: {dislikes: req.user._id},
         $pull: {likes: req.user._id}},
-        {new: true})
+        {returnDocument: 'after'})
     .then(dislike => {
         return res.status(200).send(dislike);
     })
