@@ -74,7 +74,7 @@ const commentReview = (req, res, next) => {
                 return updatedRv.populate('comments.author')
             })
             .then(populated => {
-                res.json(populated);
+                res.status(200).json(populated);
             });
     })
     .catch(next);
@@ -95,7 +95,10 @@ const removeComment = (req, res, next) => {
         return review.save();
     })
     .then(updatedReview => {
-        return res.status(200).json(updatedReview);
+        return updatedReview.populate('comments.author')
+    })
+    .then(populated => {
+        res.status(200).json(populated);
     })
     .catch(err => {
         console.error(err);
