@@ -3,6 +3,7 @@ import { notFoundError, authError, badRquestError } from '../errors/errors.js';
 
 const getReviews = (req, res, next) => {
     Review.find({})
+    .sort({createdAt: -1})
     .populate('author')
     .populate('comments.author')
     .then(reviews => {
