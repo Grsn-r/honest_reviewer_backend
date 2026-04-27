@@ -59,6 +59,7 @@ const commentReview = (req, res, next) => {
     const {text} = req.body;
     const userId = req.user._id;
     Review.findById(req.params.reviewId).orFail()
+    .sort({createdAt: -1})
     .then(review => {
         if (!review) {
             throw new notFoundError('review no encontrada');
@@ -71,7 +72,6 @@ const commentReview = (req, res, next) => {
         return Review.findByIdAndUpdate(req.params.reviewId, {
             $addToSet: {comments: {text: text, author: userId, createdAt: new Date()}}
             }, {new:true})
-            .sort({createdAt: -1})
             .then(updatedRv => {
                 return updatedRv.populate('comments.author')
             })
@@ -96,7 +96,6 @@ const removeComment = (req, res, next) => {
         review.comments.pull(commentId);
         return review.save();
     })
-    .sort({createdAt: -1})
     .then(updatedReview => {
         return updatedReview.populate('comments.author')
     })
@@ -112,8 +111,6 @@ const removeComment = (req, res, next) => {
 const removeReview = (req, res, next) => {
     Review.findById(req.params.reviewId).orFail()
     .then(review => {
-        console.log('Review found:', review._id);
-        console.log('Review author:', review.author);
         if (review.author.equals(req.user._id)) {
             return Review.findByIdAndDelete(req.params.reviewId)
             .then(deleted => {
