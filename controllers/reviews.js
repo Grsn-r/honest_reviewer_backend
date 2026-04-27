@@ -59,7 +59,6 @@ const commentReview = (req, res, next) => {
     const {text} = req.body;
     const userId = req.user._id;
     Review.findById(req.params.reviewId).orFail()
-    .sort({createdAt: -1})
     .then(review => {
         if (!review) {
             throw new notFoundError('review no encontrada');
@@ -76,6 +75,7 @@ const commentReview = (req, res, next) => {
                 return updatedRv.populate('comments.author')
             })
             .then(populated => {
+                populated.comments.sort((a,b) => new Date(b.createdAt) - new Date(a.createdAt));
                 res.status(200).json(populated);
             });
     })
