@@ -27,7 +27,8 @@ app.use(cors({
     origin: [
         'http://localhost:3000',
         'https://honest-reviewer.vercel.app'     
-    ]
+    ],
+    credentials: true
 }))
 app.use(helmet());
 app.use(limiter);
@@ -37,7 +38,7 @@ app.post('/login', validateLogin, login);
 app.post('/register', validateCreateUser, createUser);
 app.use(auth);
 app.use('/users', users);
-app.use('/', reviews);
+app.use('/reviews', reviews);
 app.use(errorLogger);
 app.use((err, req, res, next) => {
     if (err.code === 11000 ) {
