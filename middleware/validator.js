@@ -2,10 +2,10 @@ import { celebrate, Joi } from "celebrate";
 
 const validateCreateUser = celebrate({
     body: Joi.object().keys({
-        name: Joi.string().required().min(3).max(50),
+        name: Joi.string().required().min(3).max(22),
         email: Joi.string().required().email(),
         password: Joi.string().required(),
-        bio: Joi.string().max(300),
+        bio: Joi.string().max(35),
     })
 });
 
