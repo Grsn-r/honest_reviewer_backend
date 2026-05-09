@@ -20,7 +20,7 @@ const createUser = (req, res, next) => {
     bcrypt.hash(req.body.password, 10)
     .then(hash => User.create({name, email, password: hash, bio}))
     .then(user => {
-        return res.status(200).send('Usuario creado correctamente');
+        return res.status(200).json({message: 'Usuario creado con éxito'});
     })
     .catch(next);
 };
@@ -50,7 +50,7 @@ const updateUser = (req, res, next) => {
     User.findByIdAndUpdate(userId, {name, bio})
     .then(data => {
         if (data) {
-            return res.status(200).send('Datos actualizados');
+            return res.status(200).json({message: 'Datos actualizados'});
         }
         throw new notFoundError('Usuario no encontrado');
     })
