@@ -103,7 +103,6 @@ const removeComment = (req, res, next) => {
         res.status(200).json(populated);
     })
     .catch(err => {
-        console.error(err);
         next();
     });
 }

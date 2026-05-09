@@ -64,13 +64,10 @@ const setPassword = (req, res, next) => {
     .then(user => {
         bcrypt.compare(password, user.password)
         .then(match => {
-            if (!match) {
-                throw new authError('Contraseña incorrecta')
-            }
                 bcrypt.hash(req.body.newPassword, 10)
                 .then(hash => User.findByIdAndUpdate(userId, {password: hash}))
                 .then(mod => {
-                    return res.status(200).send('Contraseña modificada')
+                    return res.status(200).json({message: 'contraseña modificada'})
                 })
                 .catch(next);
             })
