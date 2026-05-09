@@ -5,7 +5,7 @@ const userSchema = new Schema({
     name:{
         type: String,
         minlength: 3,
-        maxlength: 22,
+        maxlength: 50,
         required: true,
     },
     email:{
@@ -25,7 +25,7 @@ const userSchema = new Schema({
     },
     bio:{
         type: String,
-        maxlength: 35,
+        maxlength: 300,
         default: 'pon algo sobre ti, un chisme puede ser',
     },
 },
