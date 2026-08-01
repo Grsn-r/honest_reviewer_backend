@@ -43,7 +43,7 @@ const reviewSchema = new Schema({
         }
         },
     ],
-   image: {
+    image: {
     url: {
     type: String,
     default: null,
