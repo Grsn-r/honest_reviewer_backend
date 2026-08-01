@@ -18,31 +18,37 @@ const getReviews = (req, res, next) => {
     .catch(next);
 };
 
-const createReview = (req, res, next) => {
-    const {title, text} = req.body;
-    const reviewData = {
-        title,
-        text,
-        author: req.user._id,
-        image
-    }
-    if (req.file) {
-        const result = uploadToCloudinary(
-        req.file.buffer,
-        'honest-reviewer/reviews'
-      );
-      reviewData.image = {
-        url: result.secure_url,
-        publicId: result.public_id,
+const createReview = async (req, res, next) => {
+    try {
+        const { title, text } = req.body;
+
+        const reviewData = {
+            title,
+            text,
+            author: req.user._id,
+            image: null,
+        };
+
+        if (req.file) {
+            const result = await uploadToCloudinary(
+                req.file.buffer,
+                "honest-reviewer/reviews"
+            );
+
+            reviewData.image = {
+                url: result.secure_url,
+                publicId: result.public_id,
+            };
         }
+
+        const review = await Review.create(reviewData);
+
+        return res.status(201).json(review);
+    } catch (error) {
+        console.error("Error al crear review:", error);
+        return next(error);
     }
-    
-    Review.create(reviewData)
-    .then(review => {
-        return res.status(200).json(review);
-    })
-    .catch(next);
-}
+};
 
 const likeReview = (req, res, next) => {
     Review.findByIdAndUpdate(req.params.reviewId, {
