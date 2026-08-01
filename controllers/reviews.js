@@ -1,5 +1,6 @@
 import Review from '../models/review.js';
 import { notFoundError, authError, badRquestError } from '../errors/errors.js';
+import uploadToCloudinary from '../utils/uploadToCloudinary.js';
 
 const getReviews = (req, res, next) => {
     Review.find({})
@@ -22,10 +23,19 @@ const createReview = (req, res, next) => {
         title,
         text,
         author: req.user._id,
+        image
     }
     if (req.file) {
-        reviewData.picture = req.file.filename;
+        const result = uploadToCloudinary(
+        req.file.buffer,
+        'honest-reviewer/reviews'
+      );
+      reviewData.image = {
+        url: result.secure_url,
+        publicId: result.public_id,
+        }
     }
+    
     Review.create(reviewData)
     .then(review => {
         return res.status(200).json(review);

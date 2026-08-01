@@ -1,25 +1,19 @@
 import multer from "multer";
-import {v4 as uuidv4} from 'uuid';
-import path from "path";
 
-const storage = multer.diskStorage({
-    destination: (req, file, cb) => {
-        cb(null, path.join('uploads'));
-    },
-    filename : (req, file, cb) => {
-        const ext = path.extname(file.originalname);
-        const newName = `${uuidv4()}${ext}`;
-        cb(null, newName)
-    }
-});
+const storage = multer.memoryStorage();
+
+const allowedTypes = [
+    "image/jpeg",
+    "image/png",
+    "image/webp",
+];
 
 const fileFilter = (req, file, cb) => {
-    if (file.mimetype.startsWith('image/')) {
-        cb(null, true);
-    } else {
-        cb(new Error('solo se permiten archivos de imagen'), false);
+    if (allowedTypes.includes(file.mimetype)) {
+        return cb(null, true);
     }
-}
+    cb(new Error("Formato de imagen no permitido"));
+};
 
 const upload = multer({
     storage,
