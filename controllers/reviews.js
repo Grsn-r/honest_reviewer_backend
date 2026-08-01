@@ -1,5 +1,7 @@
 import Review from '../models/review.js';
 import { notFoundError, authError, badRquestError } from '../errors/errors.js';
+import uploadToCloudinary from '../utils/uploadToCloudinary.js';
+import cloudinary from '../config/cloudinary.js';
 
 const getReviews = (req, res, next) => {
     Review.find({})
@@ -8,7 +10,7 @@ const getReviews = (req, res, next) => {
     .populate('comments.author')
     .then(reviews => {
         const allReviews = reviews.map(rv => {
-            const fullReview = { ...rv.toObject(), pictureUrl: rv.picture ? `${req.protocol}://${req.get('host')}/uploads/${rv.picture}` : null }
+            const fullReview = { ...rv.toObject(), pictureUrl: rv.image?.url || null }
             return fullReview;
         })
         return res.status(200).json(allReviews);
@@ -22,10 +24,19 @@ const createReview = (req, res, next) => {
         title,
         text,
         author: req.user._id,
+        image
     }
     if (req.file) {
-        reviewData.picture = req.file.filename;
+        const result = uploadToCloudinary(
+        req.file.buffer,
+        'honest-reviewer/reviews'
+      );
+      reviewData.image = {
+        url: result.secure_url,
+        publicId: result.public_id,
+        }
     }
+    
     Review.create(reviewData)
     .then(review => {
         return res.status(200).json(review);
@@ -111,6 +122,7 @@ const removeReview = (req, res, next) => {
     Review.findById(req.params.reviewId).orFail()
     .then(review => {
         if (review.author.equals(req.user._id)) {
+            cloudinary.uploader.destroy(review.image.publicId);
             return Review.findByIdAndDelete(req.params.reviewId)
             .then(deleted => {
                 res.status(200).send(deleted);

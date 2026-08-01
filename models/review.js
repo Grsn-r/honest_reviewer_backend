@@ -43,10 +43,16 @@ const reviewSchema = new Schema({
         }
         },
     ],
-    picture:{
-        type: String,
-        required: false,
-    }
+   image: {
+    url: {
+    type: String,
+    default: null,
+     },
+    publicId: {
+    type: String,
+    default: null,
+    },
+    },
 }, 
 {timestamps: true,});
 
