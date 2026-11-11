@@ -21,7 +21,7 @@
   },
   "dependencies": {
     "bcrypt": "^6.0.0",
-    "celebrate": "^12.1.2",
+    "celebrate": "^16.0.0",
     "cloudinary": "^2.10.0",
     "cors": "^2.8.6",
     "dotenv": "^17.4.2",
@@ -38,10 +38,13 @@
     "winston": "^3.19.0"
   },
   "devDependencies": {
-    "nodemon": "^3.1.14",
+    "nodemon": "^3.1.11",
     "standard": "^17.1.2"
   },
   "eslintConfig": {
     "extends": "./node_modules/standard/eslintrc.json"
+  },
+  "allowScripts": {
+    "bcrypt@6.0.0": true
   }
 }
